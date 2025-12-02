@@ -1,5 +1,8 @@
 name: "FancyVerteiler"
 description: "Deploy Minecraft and Hytale plugins on multiple platforms"
+branding:
+  color: yellow
+  icon: upload-cloud
 inputs:
   my_input:
     description: "An input parameter"
