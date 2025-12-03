@@ -41,7 +41,7 @@ func (s *Service) Deploy(cfg *config.DeploymentConfig) error {
 
 	pluginJarPath := cfg.PluginJarPath
 	pluginJarPath = strings.ReplaceAll(pluginJarPath, "%VERSION%", ver)
-	file, err := os.Open(cfg.PluginJarPath)
+	file, err := os.Open(pluginJarPath)
 	if err != nil {
 		return err
 	}
