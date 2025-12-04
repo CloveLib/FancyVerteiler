@@ -3,6 +3,7 @@ package main
 import (
 	"FancyVerteiler/internal/config"
 	"FancyVerteiler/internal/discord"
+	"FancyVerteiler/internal/git"
 	"FancyVerteiler/internal/modrinth"
 
 	"github.com/sethvargo/go-githubactions"
@@ -26,6 +27,8 @@ func main() {
 
 	githubactions.Infof("Successfully read config for project: %s", cfg.ProjectName)
 
+	gs := git.New()
+
 	if cfg.Modrinth != nil {
 		apiKey := githubactions.GetInput("modrinth_api_key")
 		if apiKey == "" {
@@ -34,7 +37,7 @@ func main() {
 
 		githubactions.Infof("Deploying to Modrinth project: %s", cfg.Modrinth.ProjectID)
 
-		mr := modrinth.New(apiKey)
+		mr := modrinth.New(apiKey, gs)
 		if err := mr.Deploy(cfg); err != nil {
 			githubactions.Fatalf("failed to deploy to Modrinth: %v", err)
 		}

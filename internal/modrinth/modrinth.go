@@ -2,6 +2,7 @@ package modrinth
 
 import (
 	"FancyVerteiler/internal/config"
+	"FancyVerteiler/internal/git"
 	"bytes"
 	"encoding/json"
 	"fmt"
@@ -14,12 +15,14 @@ import (
 )
 
 type Service struct {
+	git    *git.Service
 	hc     *http.Client
 	apiKey string
 }
 
-func New(apiKey string) *Service {
+func New(apiKey string, git *git.Service) *Service {
 	return &Service{
+		git:    git,
 		hc:     &http.Client{},
 		apiKey: apiKey,
 	}
@@ -29,7 +32,7 @@ func (s *Service) Deploy(cfg *config.DeploymentConfig) error {
 	body := &bytes.Buffer{}
 	writer := multipart.NewWriter(body)
 
-	data, err := dataJson(cfg)
+	data, err := s.dataJson(cfg)
 	if err != nil {
 		return err
 	}
@@ -88,15 +91,18 @@ func (s *Service) Deploy(cfg *config.DeploymentConfig) error {
 	return nil
 }
 
-func dataJson(cfg *config.DeploymentConfig) (string, error) {
+func (s *Service) dataJson(cfg *config.DeploymentConfig) (string, error) {
 	ver, err := cfg.Version()
 	if err != nil {
 		return "", err
 	}
+
 	cl, err := cfg.Changelog()
 	if err != nil {
 		return "", err
 	}
+	cl = strings.ReplaceAll(cl, "%COMMIT_HASH%", s.git.CommitSHA())
+	cl = strings.ReplaceAll(cl, "%COMMIT_MESSAGE%", s.git.CommitMessage())
 
 	req := CreateVersionReq{
 		Name:          ver,
