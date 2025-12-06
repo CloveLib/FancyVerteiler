@@ -19,8 +19,15 @@ type DeploymentConfig struct {
 	VersionPath string `json:"version_path"`
 	version     string
 
-	Modrinth *Modrinth `json:"modrinth,omitempty"`
-	Modtale  *Modtale  `json:"modtale,omitempty"`
+	FancySpaces *FancySpaces `json:"fancyspaces,omitempty"`
+	Modrinth    *Modrinth    `json:"modrinth,omitempty"`
+	Modtale     *Modtale     `json:"modtale,omitempty"`
+}
+
+type FancySpaces struct {
+	SpaceID           string   `json:"space_id"`
+	Channel           string   `json:"channel"`
+	SupportedVersions []string `json:"supported_versions"`
 }
 
 type Modrinth struct {

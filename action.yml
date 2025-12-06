@@ -10,6 +10,9 @@ inputs:
   discord_webhook_url:
     description: "Discord webhook URL for notifications"
     required: false
+  fancyspaces_api_key:
+    description: "FancySpaces API key for deployment"
+    required: false
   modrinth_api_key:
     description: "Modrinth API key for deployment"
     required: false

@@ -3,6 +3,7 @@ package main
 import (
 	"FancyVerteiler/internal/config"
 	"FancyVerteiler/internal/discord"
+	"FancyVerteiler/internal/fancyspaces"
 	"FancyVerteiler/internal/git"
 	"FancyVerteiler/internal/modrinth"
 	"FancyVerteiler/internal/modtale"
@@ -29,6 +30,21 @@ func main() {
 	githubactions.Infof("Successfully read config for project: %s", cfg.ProjectName)
 
 	gs := git.New()
+
+	if cfg.FancySpaces != nil {
+		apiKey := githubactions.GetInput("fancyspaces_api_key")
+		if apiKey == "" {
+			githubactions.Fatalf("missing input 'fancyspaces_api_key'")
+		}
+
+		githubactions.Infof("Deploying to FancySpaces space: %s", cfg.FancySpaces.SpaceID)
+
+		fs := fancyspaces.New(apiKey, gs)
+		if err := fs.Deploy(cfg); err != nil {
+			githubactions.Fatalf("failed to deploy to FancySpaces: %v", err)
+		}
+		githubactions.Infof("Successfully deployed to FancySpaces space: %s", cfg.FancySpaces.SpaceID)
+	}
 
 	if cfg.Modrinth != nil {
 		apiKey := githubactions.GetInput("modrinth_api_key")
