@@ -12,29 +12,26 @@ type Service struct {
 	cachedMessage string
 }
 
-func New() *Service {
+func New(sha, message string) *Service {
 	return &Service{
-		cachedCommit:  "unknown",
-		cachedMessage: "unknown",
+		cachedCommit:  sha,
+		cachedMessage: message,
 	}
 }
 
 func (s *Service) Setup() error {
-	//sha, err := fetchLatestCommitSHA()
-	//if err != nil {
-	//	return err
-	//}
-	//
-	//msg, err := fetchLatestCommitMessage()
-	//if err != nil {
-	//	return err
-	//}
-	//
-	//s.cachedCommit = strings.TrimSpace(sha)
-	//s.cachedMessage = strings.TrimSpace(msg)
+	sha, err := fetchLatestCommitSHA()
+	if err != nil {
+		return err
+	}
 
-	s.cachedCommit = os.Getenv("COMMIT_SHA")
-	s.cachedMessage = os.Getenv("COMMIT_MESSAGE")
+	msg, err := fetchLatestCommitMessage()
+	if err != nil {
+		return err
+	}
+
+	s.cachedCommit = strings.TrimSpace(sha)
+	s.cachedMessage = strings.TrimSpace(msg)
 
 	return nil
 }

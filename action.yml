@@ -7,6 +7,12 @@ inputs:
   config_path:
     description: "Path to the JSON configuration file"
     required: true
+  commit_sha:
+    description: "Commit SHA for the deployment"
+    required: false
+  commit_message:
+    description: "Commit message for the deployment"
+    required: false
   discord_webhook_url:
     description: "Discord webhook URL for notifications"
     required: false

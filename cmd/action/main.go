@@ -29,10 +29,15 @@ func main() {
 
 	githubactions.Infof("Successfully read config for project: %s", cfg.ProjectName)
 
-	gs := git.New()
-	if err := gs.Setup(); err != nil {
-		githubactions.Warningf("failed to setup git service: %v", err)
+	sha := githubactions.GetInput("commit_sha")
+	if sha == "" {
+		sha = "unknown"
 	}
+	message := githubactions.GetInput("commit_message")
+	if message == "" {
+		message = "unknown"
+	}
+	gs := git.New(sha, message)
 
 	if cfg.FancySpaces != nil {
 		apiKey := githubactions.GetInput("fancyspaces_api_key")
