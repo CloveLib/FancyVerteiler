@@ -71,14 +71,14 @@ func (s *Service) Deploy(cfg *config.DeploymentConfig) error {
 		return err
 	}
 
-	req, err := http.NewRequest("POST", "https://modtale.net/api/v1/publish/"+cfg.Modtale.ProjectID, body)
+	req, err := http.NewRequest("POST", "https://modtale.net/api/projects/"+cfg.Modtale.ProjectID+"/versions", body)
 	if err != nil {
 		return err
 	}
 
 	// Set the correct Content-Type with boundary
 	req.Header.Set("Content-Type", writer.FormDataContentType())
-	req.Header.Set("X-Api-Key", s.apiKey)
+	req.Header.Set("X-MODTALE-KEY", s.apiKey)
 	req.Header.Set("User-Agent", "FancyVerteiler (https://github.com/FancyInnovations/FancyVerteiler)")
 
 	resp, err := s.hc.Do(req)
