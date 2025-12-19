@@ -71,7 +71,7 @@ func (s *Service) createVersion(cfg *config.DeploymentConfig) (string, error) {
 		return "", err
 	}
 
-	reqBody, err := http.NewRequest("POST", "https://api.orbis.place.net/resources/"+cfg.Orbis.ResourceID+"/versions", strings.NewReader(string(data)))
+	reqBody, err := http.NewRequest("POST", "https://api.orbis.place/resources/"+cfg.Orbis.ResourceID+"/versions", strings.NewReader(string(data)))
 	if err != nil {
 		return "", err
 	}
@@ -130,7 +130,7 @@ func (s *Service) uploadFile(cfg *config.DeploymentConfig, versionID string) (st
 		return "", err
 	}
 
-	req, err := http.NewRequest("POST", "https://api.orbis.place.net/resources/"+cfg.Orbis.ResourceID+"/versions/"+versionID+"/files", body)
+	req, err := http.NewRequest("POST", "https://api.orbis.place/resources/"+cfg.Orbis.ResourceID+"/versions/"+versionID+"/files", body)
 	if err != nil {
 		return "", err
 	}
@@ -174,7 +174,7 @@ func (s *Service) setPrimaryVersionFile(cfg *config.DeploymentConfig, fileId str
 		return err
 	}
 
-	reqBody, err := http.NewRequest("POST", "https://api.orbis.place.net/resources/"+cfg.Orbis.ResourceID+"/versions/"+ver+"/files/primary", strings.NewReader(string(data)))
+	reqBody, err := http.NewRequest("POST", "https://api.orbis.place/resources/"+cfg.Orbis.ResourceID+"/versions/"+ver+"/files/primary", strings.NewReader(string(data)))
 	if err != nil {
 		return err
 	}
