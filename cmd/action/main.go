@@ -9,6 +9,7 @@ import (
 	"FancyVerteiler/internal/modrinth"
 	"FancyVerteiler/internal/modtale"
 	"FancyVerteiler/internal/orbis"
+	"FancyVerteiler/internal/unifiedhytale"
 
 	"github.com/sethvargo/go-githubactions"
 )
@@ -114,6 +115,21 @@ func main() {
 			githubactions.Fatalf("failed to deploy to CurseForge: %v", err)
 		}
 		githubactions.Infof("Successfully deployed to CurseForge project: %s", cfg.CurseForge.ProjectID)
+	}
+
+	if cfg.UnifiedHytale != nil {
+		apiKey := githubactions.GetInput("unifiedhytale_api_key")
+		if apiKey == "" {
+			githubactions.Fatalf("missing input 'unifiedhytale_api_key'")
+		}
+
+		githubactions.Infof("Deploying to Modtale project: %s", cfg.UnifiedHytale.ProjectID)
+
+		mt := unifiedhytale.New(apiKey, gs)
+		if err := mt.Deploy(cfg); err != nil {
+			githubactions.Fatalf("failed to deploy to UnifiedHytale: %v", err)
+		}
+		githubactions.Infof("Successfully deployed to UnifiedHytale project: %s", cfg.UnifiedHytale.ProjectID)
 	}
 
 	if discWebhookURL != "" {

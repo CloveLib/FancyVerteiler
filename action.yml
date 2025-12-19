@@ -31,6 +31,9 @@ inputs:
   curseforge_api_key:
     description: "CurseForge API key for deployment"
     required: false
+  unifiedhytale_api_key:
+    description: "UnifiedHytale API key for deployment"
+    required: false
 runs:
   using: "docker"
   image: "Dockerfile"

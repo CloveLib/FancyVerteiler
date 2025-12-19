@@ -19,11 +19,12 @@ type DeploymentConfig struct {
 	VersionPath string `json:"version_path"`
 	version     string
 
-	FancySpaces *FancySpaces `json:"fancyspaces,omitempty"`
-	Modrinth    *Modrinth    `json:"modrinth,omitempty"`
-	Orbis       *Orbis       `json:"orbis,omitempty"`
-	Modtale     *Modtale     `json:"modtale,omitempty"`
-	CurseForge  *CurseForge  `json:"curseforge,omitempty"`
+	FancySpaces   *FancySpaces   `json:"fancyspaces,omitempty"`
+	Modrinth      *Modrinth      `json:"modrinth,omitempty"`
+	Orbis         *Orbis         `json:"orbis,omitempty"`
+	Modtale       *Modtale       `json:"modtale,omitempty"`
+	CurseForge    *CurseForge    `json:"curseforge,omitempty"`
+	UnifiedHytale *UnifiedHytale `json:"unifiedhytale,omitempty"`
 }
 
 type FancySpaces struct {
@@ -53,12 +54,18 @@ type Modtale struct {
 }
 
 type CurseForge struct {
-	ProjectID    string                `json:"project_id"`
-	GameVersions []interface{}         `json:"game_versions"` // Can be int or string
-	ReleaseType  string                `json:"release_type"`
-	Type         string                `json:"type,omitempty"`   // "plugin" or "mod" (defaults to "plugin")
-	Loader       string                `json:"loader,omitempty"` // "fabric", "forge", "neoforge", "quilt" (required for mods)
-	Relations    *CurseForgeRelations  `json:"relations,omitempty"`
+	ProjectID    string               `json:"project_id"`
+	GameVersions []interface{}        `json:"game_versions"` // Can be int or string
+	ReleaseType  string               `json:"release_type"`
+	Type         string               `json:"type,omitempty"`   // "plugin" or "mod" (defaults to "plugin")
+	Loader       string               `json:"loader,omitempty"` // "fabric", "forge", "neoforge", "quilt" (required for mods)
+	Relations    *CurseForgeRelations `json:"relations,omitempty"`
+}
+
+type UnifiedHytale struct {
+	ProjectID      string `json:"project_id"`
+	GameVersions   []string
+	ReleaseChannel string `json:"release_channel"`
 }
 
 type CurseForgeRelations struct {
