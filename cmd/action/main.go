@@ -83,6 +83,7 @@ func deployToFancySpaces(cfg *config.DeploymentConfig, gs *git.Service) {
 	fs := fancyspaces.New(apiKey, gs)
 	if err := fs.Deploy(cfg); err != nil {
 		githubactions.Errorf("Failed to deploy to FancySpaces: %v", err)
+		return
 	}
 	githubactions.Infof("Successfully deployed to FancySpaces space: %s", cfg.FancySpaces.SpaceID)
 }

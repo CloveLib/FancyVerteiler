@@ -1,5 +1,8 @@
 module FancyVerteiler
 
-go 1.25.4
+go 1.25.5
 
-require github.com/sethvargo/go-githubactions v1.3.2
+require (
+	github.com/OliverSchlueter/goutils v0.0.24
+	github.com/sethvargo/go-githubactions v1.3.2
+)
