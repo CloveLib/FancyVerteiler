@@ -19,6 +19,8 @@ Send notifications to a Discord channel via webhook.
 
 ## Usage
 
+### GitHub Actions
+
 Include the following in your GitHub Actions workflow:
 ```yml
 - uses: fancyinnovations/fancyverteiler@main
@@ -115,3 +117,15 @@ Full example with git integration:
 ```
 
 This will replace `%COMMIT_HASH%` and `%COMMIT_MESSAGE%` in the changelog with the actual commit hash and message.
+
+### Standalone
+
+You can also run FancyVerteiler as a standalone app.
+Everything works the same way as in GitHub Actions, but you need to provide the inputs as environment variables.
+
+Environment variables:
+- `FV_CONFIG_PATH`
+- `FV_DISCORD_WEBHOOK_URL`
+- `FV_COMMIT_SHA`
+- `FV_MESSAGE_SHA`
+- `FV_{PLATFORM}_API_KEY` (example: `FV_FANCYSPACES_API_KEY`)
